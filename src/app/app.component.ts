@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { MatSelectionList} from "@angular/material/list";
+import { MatListOption, MatSelectionList} from "@angular/material/list";
 export interface Subject {
   name: string;
 }
@@ -19,6 +19,8 @@ export class AppComponent {
   selectable = true;
   removable = true;
   addOnBlur = true;
+  isAutreSelected = false;
+
   myForm: FormGroup;
   @ViewChild('chipList', { static: true }) chipList;
   GradeArray: any = ['8th Grade', '9th Grade', '10th Grade', '11th Grade', '12th Grade'];
@@ -47,7 +49,7 @@ export class AppComponent {
       hobbies:['', [Validators.required]],
       huereConsacrer:['', [Validators.required]],
       soutien:['', [Validators.required]],
-      utreSoutien:[' '],
+      autreSoutien:['', [Validators.required]],
       mentore:['', [Validators.required]]
       //dob: ['', [Validators.required]],
       //grade: [''],
@@ -95,9 +97,12 @@ export class AppComponent {
     console.log(this.myForm.value)
   }
 
-test( list:MatSelectionList)
+onChangeListSoutiens( options: MatListOption[])
 {
-  console.log("list=", list);
+  this.isAutreSelected = false;
+  options.forEach(option => { if(option.value  == "Autre (préciser)") this.isAutreSelected = true;});
+
+  console.log(this.isAutreSelected);
 }
 
 

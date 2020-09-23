@@ -113,19 +113,23 @@
           </mat-error>
         </mat-form-field>
         <!--Vous pouvez apporter du soutien à un étudiant par (choix multiple)--> 
-        <mat-selection-list class="example-full-width" formControlName="soutien" #soutien>
+        <mat-selection-list class="example-full-width" formControlName="soutien" #soutien (selectionChange)="onChangeListSoutiens(soutien.selectedOptions.selected)">
           <mat-label>Vous pouvez apporter du soutien à un étudiant par (choix multiple)?</mat-label>
-          <mat-list-option *ngFor="let soutien of typesOfSoutien">
+          <mat-list-option *ngFor="let soutien of typesOfSoutien" [value]="soutien" >
             {{soutien}} 
           </mat-list-option>
-          <input *ngIf="" matInput placeholder="Précisez" #autreSoutien formControlName="autreSoutien" style="width:100px;">
-        </mat-selection-list> 
-        VALUE={{soutien.selectedOptions.selected}}
-     <input type="button" (click)="test(soutien)"/>
 
+        </mat-selection-list>
+        <mat-form-field  style="padding:0px 16px;" class="example-full-width"   *ngIf="isAutreSelected">
+          <input matInput placeholder="Précisez le soutien que vous pouvez apporter" formControlName="autreSoutien">
+           <mat-error *ngIf="errorHandling('autreSoutien', 'required')">
+             Vous devez préciser le soutien que vous pouvez apporter
+           </mat-error> 
+         </mat-form-field>
         <!--Avez-vous déjà mentoré -->
+        <br/>
       <div class="example-full-width">
-        <mat-label>Avez-vous déjà mentoré?</mat-label>
+        <mat-label>Avez-vous déjà mentoré?  </mat-label>
         <mat-radio-group aria-label="Select an option" formControlName="mentore">
           <mat-radio-button value="Oui">Oui</mat-radio-button>
           <mat-radio-button value="Non">Non</mat-radio-button>
